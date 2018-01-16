@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/base.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/dataProvider.js"></script>
+		<script>
+			$(function(){
+				loadSlider(function(data){
+					let arr = data.data.slider;
+					arr.unshift(arr[arr.length-1]);
+					arr.push(arr[1]);
+					for(let item of arr){
+						let content = `
+							<div class="mui-slider-item">
+								<img src="${item.picUrl}">
+							</div>
+						`;
+						let $d = $(content.trim());
+						$(".mui-slider-loop").append($d);
+					}	
+					$(".mui-slider-loop div").first().addClass("mui-slider-item-duplicate");
+					$(".mui-slider-loop div").last().addClass("mui-slider-item-duplicate");
+					
+					mui("#slider").slider({
+						interval: 1000 // 轮播时长
+					});
+								
+				});
+
+
+
+				loadHotSongs((data) => {
+					for(let item of data.songlist)
+					{
+						let d = item.data;
+						let content = `
+							<li class="mui-table-view-cell mui-media mui-col-xs-4">
+						            <img class="mui-media-object" src="https://y.gtimg.cn/music/photo_new/T002R150x150M000${d.albummid}.jpg">
+						            <div class="mui-media-body">
+										${d.albumname}-${d.singer[0].name}
+						            </div>
+							</li>
+						`;
+
+						let $li = $(content.trim());
+						$li.click(function(){
+							let objStr = localStorage.getItem("myList");
+							if(!objStr)
+							{
+								objStr = "[]";
+							}
+							let objArr = JSON.parse(objStr);
+							let songid = 'C400'+d.songmid;
+							if(objArr.findIndex( (data) => data.songid == songid ) == -1)
+							{
+								let albummid = `https://y.gtimg.cn/music/photo_new/T002R150x150M000${d.albummid}.jpg`;
+								let singer = d.singer[0].name;
+								let songname = d.albumname;
+								let duration =  d.interval;
+								let obj = {
+									albummid,singer,songname,songid,duration
+								}
+								objArr.push(obj);
+								localStorage.setItem("myList", JSON.stringify(objArr));
+							}
+						})
+						$(".mui-grid-view").append($li);
+
+					}
+				});
+
+
+			})
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的音乐</h1>
+		</header>
+
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					
+					<div id="slider" class="mui-slider">
+						<div class="mui-slider-group mui-slider-loop">
+							
+						</div>
+						<div class="mui-slider-indicator">
+							<div class="mui-indicator mui-active"></div>
+							<div class="mui-indicator"></div>
+							<div class="mui-indicator"></div>
+							<div class="mui-indicator"></div>
+							<div class="mui-indicator"></div>
+						</div>
+					</div>
+		
+					<div class="mui-card">
+						<div class="mui-card-header pad-clear">
+							<span>热门歌曲</span>
+						</div>
+						<div class="mui-card-content">
+							<ul class="mui-table-view mui-grid-view">
+							</ul>
+						</div>
+					</div>
+					
+					
+					
+					
+					
+					
+					
+				</div>
+			</div>
+		</div>
+
+		<nav class="tab-bar tab-bar-tab">
+			<a class="tab-tab-item tab-active" href="index.html">
+				<span class="mui-icon musicfont music-shouye"></span>
+				<span class="tab-tab-label">首页</span>
+			</a>
+			<a class="tab-tab-item" href="list.html">
+				<span class="mui-icon musicfont music-bangdan"></span>
+				<span class="tab-tab-label">音乐榜单</span>
+			</a>
+			<a class="tab-tab-item" href="music.html">
+				<span class="mui-icon musicfont music-yinle"></span>
+				<span class="tab-tab-label">我的音乐</span>
+			</a>
+		</nav>
+	</body>
+</html>

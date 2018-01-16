@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<!--自定义脚本依赖JQuery-->
+		<script src="js/base.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/dataProvider.js"></script>
+		<script>
+			
+			$(function(){
+
+				musicList((data) => {
+					let arr = data.data.topList;
+					for(let item of arr)
+					{
+						let picUrl = item.picUrl;
+						let topTitle = item.topTitle;
+						let songList = item.songList;
+						let content = `
+								
+							<li class="mui-table-view-cell mui-media">
+						        <a href="typesmusic.html">
+						            <img class="mui-media-object mui-pull-left" src="${picUrl}">
+						            <div class="mui-media-body">
+	                                   <p class="me-list-title">${topTitle}</p>
+						               <ul class="music-list">
+						               		<li>1.${songList[0].songname}-${songList[0].singername}</li>
+						               		<li>2.${songList[1].songname}-${songList[1].singername}</li>
+						               		<li>3.${songList[2].songname}-${songList[2].singername}</li>
+						               </ul>
+						            </div>
+						        </a>
+						    </li>
+ 
+						`;
+
+						let $li = $(content.trim());
+
+						$li.find("a").click(function(){
+							sessionStorage.setItem("topId",item.id);
+						})
+
+						$(".mui-table-view").append($li);
+
+
+					}
+				});
+			})
+
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的音乐</h1>
+		</header>
+
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					
+					<ul class="mui-table-view">
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+
+		<nav class="tab-bar tab-bar-tab">
+			<a class="tab-tab-item" href="index.html">
+				<span class="mui-icon musicfont music-shouye"></span>
+				<span class="tab-tab-label">首页</span>
+			</a>
+			<a class="tab-tab-item tab-active" href="list.html">
+				<span class="mui-icon musicfont music-bangdan"></span>
+				<span class="tab-tab-label">音乐榜单</span>
+			</a>
+			<a class="tab-tab-item" href="music.html">
+				<span class="mui-icon musicfont music-yinle"></span>
+				<span class="tab-tab-label">我的音乐</span>
+			</a>
+		</nav>
+	</body>
+
+</html>

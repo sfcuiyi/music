@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<!--自定义脚本依赖JQuery-->
+		<script src="js/base.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function changePage(){
+				$("#list").fadeToggle("fast","linear");
+				$("#play").fadeToggle("fast","linear");
+			}
+			function play(){
+				$("#music").toggleClass("rotate-360-paused");
+				$("#music").toggleClass("rotate-360");
+
+
+				
+			}
+
+			$(function(){
+				let myList = JSON.parse(localStorage.getItem("myList"));
+				for(let item of myList)
+				{
+					let content = `
+						<li dur='${item.duration}' songname='${item.songname}' pic='${item.albummid}' class="mui-table-view-cell mui-media">
+				            <img class="mui-media-object mui-pull-left song-img" src="${item.albummid}">
+				            <p class="song-title">${item.songname}-${item.singer}</p>
+					    </li>
+					`;
+
+					let $li = $(content.trim());
+					$li.click(function(){
+						let src = `
+							http://dl.stream.qqmusic.qq.com/${item.songid}.m4a?guid=8984050772&vkey=D9E9DE1956EE58A716AA46F22EB53DC1B5B03AA6FE6C6BE07BCB66219CAE7E2E2506F80EB496144C22F8765A88FD606FAE1E5CF4AF7E47CD&uin=&fromtag=999
+						`;
+
+						$("video").attr("src",src.trim());
+						changePage();
+						play();
+						$("#songname").html($(this).attr('songname'));
+						$(".poster").attr("src",$(this).attr('pic'));
+						$("#option").attr("class",'icon-pause');
+						$("#option").attr("src",'imgs/pause.png');
+						let dur = parseInt($(this).attr("dur"));
+						$("input[type=range]").attr("max",dur);
+						let sec = dur % 60;
+						let min = (dur - sec) / 60;
+						$("#endTime").html(min +":" + sec);
+
+						let time = 0;
+						let timeout = setInterval(()=>{
+							//$("#startTime").html(min +":" + sec);
+							time++;
+							let ssec = time % 60;
+							let smin = (time - sec) / 60 > 0 ? (time - sec) / 60  : 0;
+							$("#startTime").html(smin+":"+ssec);
+
+							if($("#startTime").html() >= $("#endTime").html())
+							{
+								clearInterval(timeout);
+							}
+
+						},1000)
+
+
+					})
+					$(".mui-table-view").append($li);
+				}
+			})
+
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的音乐</h1>
+		</header>
+
+		<div class="container">
+			<!--第一层层：背景图背景图，高斯模糊-->
+			<div class="bg">
+				<img class="poster" src="imgs/bc.png"/>
+			</div>
+			<!--第二层层：灰色蒙层-->
+			<div class="bg-gray"></div>
+			<!--第三层：play层-->
+			<div id="play" style="display: block;">
+				<div class="title-container">
+					<div class="text" id='songname'>
+						
+					</div>
+					<div class="icon-list">
+						<img  src="imgs/list.png" onclick="changePage()"/></img>
+					</div>
+				</div>
+				<!--旋转图-->
+				<div id="music" class="rotate-disk-container rotate-360-paused">
+					<div class="rotate-disk">
+						<img class="poster" src="imgs/timg.jpg"/>
+					</div>
+				</div>
+				<!--时间轴-->
+				<div class="slider-container">
+					<span class="slider-time" id="startTime">0:00</span>
+					<div class="mui-input-row mui-input-range chear-range">
+					    <input type="range" min="0" max="100" value="0">
+					</div>
+					<span class="slider-time" id="endTime">3:00</span>
+				</div>
+				<!--操作-->
+				<div class="operation-container">
+					<img src="imgs/prev.png" class="icon-prev" />
+					<img id='option' src="imgs/play.png" class="icon-play" onclick="play()">
+					<img src="imgs/next.png" class="icon-next" />
+				</div>
+			</div>
+			
+			<video src="" controls="" autoplay="" name="media">
+			</video>
+
+			<!-- 列表层 -->
+			<div id="list" style="display: none;">
+				<div class="mui-scroll-wrapper clear-pad" >
+					<div class="mui-scroll">
+						<ul class="mui-table-view clear-bc">
+						    
+						    
+						    
+						</ul>
+					</div>
+				</div>
+				<div class="close-btn">
+					<img src="imgs/close.png" onclick="changePage()"></img>
+				</div>
+			</div>
+			
+		</div>
+
+		<nav class="tab-bar tab-bar-tab">
+			<a class="tab-tab-item" href="index.html">
+				<span class="mui-icon musicfont music-shouye"></span>
+				<span class="tab-tab-label">首页</span>
+			</a>
+			<a class="tab-tab-item" href="list.html">
+				<span class="mui-icon musicfont music-bangdan"></span>
+				<span class="tab-tab-label">音乐榜单</span>
+			</a>
+			<a class="tab-tab-item tab-active" href="music.html">
+				<span class="mui-icon musicfont music-yinle"></span>
+				<span class="tab-tab-label">我的音乐</span>
+			</a>
+		</nav>
+	</body>
+
+</html>

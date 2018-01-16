@@ -1,0 +1,25 @@
+
+轮播图
+https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg
+首页热歌
+https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?topid=26&song_num=6&song_begin=0
+
+歌曲分类列表
+https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg
+
+列表详情
+https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?topid=   列表ID  &song_num=6&song_begin=0
+
+
+歌曲封面
+https://y.gtimg.cn/music/photo_new/T002R150x150M000    歌曲albummid     .jpg
+音乐播放地址
+http://ws.stream.qqmusic.qq.com/   歌曲ID   .m4a?fromtag=46
+
+
+								    00280Zus1Edlgy
+								    004SHnM62N6uFP
+								C400003vUjJp3QwFcd
+http://dl.stream.qqmusic.qq.com/C400003vUjJp3QwFcd.m4a?guid=8984050772&vkey=D9E9DE1956EE58A716AA46F22EB53DC1B5B03AA6FE6C6BE07BCB66219CAE7E2E2506F80EB496144C22F8765A88FD606FAE1E5CF4AF7E47CD&uin=&fromtag=999
+
+http://dl.stream.qqmusic.qq.com/C400003vUjJp3QwFcd.m4a?guid=8984050772&vkey=D9E9DE1956EE58A716AA46F22EB53DC1B5B03AA6FE6C6BE07BCB66219CAE7E2E2506F80EB496144C22F8765A88FD606FAE1E5CF4AF7E47CD&uin=&fromtag=999
